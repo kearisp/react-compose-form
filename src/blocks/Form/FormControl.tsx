@@ -13,7 +13,7 @@ import {FormControlContext} from "./FormControlContext";
 
 export type FormFieldProps<P = unknown> = P & Partial<ControllerRenderProps & ControllerFieldState>;
 
-export type FormControlProps<P = unknown> = P & {
+export type FormControlProps<P = unknown> = Omit<P, "as" | "name" | "disabled" | "required" | keyof ControllerFieldState | keyof ControllerRenderProps> & {
     as?: ComponentType<FormFieldProps<P>>;
     name: string;
     disabled?: boolean;
