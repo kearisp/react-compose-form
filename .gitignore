@@ -1,0 +1,12 @@
+# Dependency directories
+node_modules/
+
+# Output dir
+lib
+
+# dotenv environment variables file
+.env
+.env.test
+
+#
+.eslintcache

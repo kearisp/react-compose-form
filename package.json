@@ -1,0 +1,39 @@
+{
+    "name": "react-compose-form",
+    "version": "0.0.1",
+    "description": "Composable form components built on top of React Hook Form",
+    "author": "Kris Papercut <krispcut@gmail.com>",
+    "license": "MIT",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "keywords": [
+        "react",
+        "form",
+        "hooks",
+        "forms",
+        "dashboard"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kearisp/react-compose-form.git"
+    },
+    "homepage": "https://github.com/kearisp/react-compose-form/blob/master/README.md",
+    "bugs": {
+        "url": "https://github.com/kearisp/react-compose-form/issues"
+    },
+    "scripts": {
+        "prepublishOnly": "npm run build",
+        "start": "npm run watch",
+        "watch": "tsc --watch",
+        "build": "tsc --build",
+        "test": "echo 'error'"
+    },
+    "peerDependencies": {
+        "react": "x.x.x",
+        "react-hook-form": "^7.x.x"
+    },
+    "devDependencies": {
+        "@types/react": "^19.2.2",
+        "typescript": "^5.9.3"
+    }
+}
