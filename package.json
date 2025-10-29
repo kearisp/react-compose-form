@@ -1,6 +1,6 @@
 {
     "name": "react-compose-form",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Composable form components built on top of React Hook Form",
     "author": "Kris Papercut <krispcut@gmail.com>",
     "license": "MIT",

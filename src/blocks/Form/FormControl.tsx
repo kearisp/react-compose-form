@@ -9,7 +9,7 @@ import {
 import {useFormGroupName} from "./FormGroupContext";
 
 
-export type FormFieldProps<P = unknown> = P & ControllerRenderProps;
+export type FormFieldProps<P = unknown> = P & Partial<ControllerRenderProps>;
 
 export type FormControlProps<P = unknown> = P & {
     as?: ComponentType<FormFieldProps<P>>;
