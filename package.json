@@ -13,6 +13,14 @@
         "forms",
         "dashboard"
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kearisp/react-compose-form.git"
+    },
+    "homepage": "https://github.com/kearisp/react-compose-form/blob/master/README.md",
+    "bugs": {
+        "url": "https://github.com/kearisp/react-compose-form/issues"
+    },
     "scripts": {
         "prepublishOnly": "npm run build",
         "start": "npm run watch",
