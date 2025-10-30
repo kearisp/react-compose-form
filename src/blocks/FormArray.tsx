@@ -1,4 +1,4 @@
-import React, {isValidElement, cloneElement, Children, PropsWithChildren, ComponentType} from "react";
+import React, {isValidElement, cloneElement, Children, PropsWithChildren, ComponentType, ElementType} from "react";
 import {useFieldArray} from "react-hook-form";
 import {FormGroup} from "./FormGroup";
 import {useFormGroupName} from "./FormGroupContext";
@@ -7,7 +7,7 @@ import {FormArrayItemContext} from "./FormArrayItemContext";
 
 
 export type FormArrayProps = PropsWithChildren<{
-    as?: ComponentType<PropsWithChildren>;
+    as?: ComponentType<PropsWithChildren> | ElementType<PropsWithChildren>;
     name: string;
 }>;
 

@@ -5,13 +5,15 @@ import {
     ControllerRenderProps,
     Message,
     ValidationRule,
+    ControllerFieldState
 } from "react-hook-form";
 import {useFormGroupName} from "./FormGroupContext";
+import {FormControlContext} from "./FormControlContext";
 
 
-export type FormFieldProps<P = unknown> = P & ControllerRenderProps;
+export type FormFieldProps<P = unknown> = P & Partial<ControllerRenderProps & ControllerFieldState>;
 
-export type FormControlProps<P = unknown> = P & {
+export type FormControlProps<P = unknown> = Omit<P, "as" | "name" | "disabled" | "required" | keyof ControllerFieldState | keyof ControllerRenderProps> & {
     as?: ComponentType<FormFieldProps<P>>;
     name: string;
     disabled?: boolean;
@@ -38,11 +40,13 @@ export const FormControl = <P = unknown>(props: FormControlProps<P>) => {
           rules={{
             required
           }}
-          render={({field}) => {
+          render={({field, fieldState}) => {
             return (
-                <Component
-                  {...rest as P}
-                  {...field} />
+                <FormControlContext value={fieldState}>
+                    <Component
+                      {...rest as P}
+                      {...field} />
+                </FormControlContext>
             );
           }} />
     );

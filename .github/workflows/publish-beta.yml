@@ -31,15 +31,9 @@ jobs:
 
           - name: Setup beta version
             id: setup_beta
-            continue-on-error: true
             uses: kearisp/npm-version-action@v0.0.1
             with:
                 tag: beta
-
-          - name: Setup first beta version
-            if: ${{ steps.setup_beta.result == 'feilure' }}
-            shell: bash
-            run: npm pkg set version=0.0.1-beta.0
 
           - name: Cache dependencies
             uses: actions/cache@v4
@@ -58,4 +52,4 @@ jobs:
             shell: bash
             env:
                 NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-            run: npm publish --provenance --tag beta --access public
+            run: npm publish --provenance --tag beta

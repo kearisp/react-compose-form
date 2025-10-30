@@ -7,7 +7,7 @@ npm i react-hook-form react-compose-form
 ## Usage
 
 ```tsx
-import {Form, FormControl, FormFieldProps} from "@kearisp/react-admin";
+import {Form, FormControl, FormFieldProps} from "react-compose-form";
 
 type InputProps = {
     label: string;
@@ -31,7 +31,7 @@ const InputField = ({label, ...props}: FormFieldProps<InputProps>) => {
 ```
 
 ```tsx
-import {Form, FormControl, FormArray, useFormArray} from "@kearisp/react-admin";
+import {Form, FormControl, FormArray, useFormArray} from "react-compose-form";
 
 
 const ExampleArray = ({ children }: PropsWithChildren) => {
