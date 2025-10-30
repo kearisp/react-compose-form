@@ -1,4 +1,12 @@
-import React, {useRef, useCallback, FormEvent, ElementType, ComponentType, PropsWithChildren} from "react";
+import React, {
+    useRef,
+    useCallback,
+    FormEvent,
+    ComponentType,
+    PropsWithChildren,
+    JSX,
+    HTMLAttributes
+} from "react";
 import {
     useForm,
     FormProvider,
@@ -8,32 +16,69 @@ import {
     SubmitErrorHandler
 } from "react-hook-form";
 
-type FormComponentProps = {
+export type FormComponentProps<P = unknown> = P & PropsWithChildren<{
     className?: string;
     onSubmit?: (e: FormEvent) => void;
-};
+}>;
 
-export type FormProps<T extends FieldValues = FieldValues, C = any> = PropsWithChildren<
-    UseFormProps<T, C> & {
-        as?: ElementType<FormComponentProps> | ComponentType<FormComponentProps>;
+export type FormProps<T extends FieldValues = FieldValues, C = any, P = unknown> = PropsWithChildren<
+    UseFormProps<T, C> & P & {
+        as?: ComponentType<FormComponentProps<P>> | keyof JSX.IntrinsicElements;
         className?: string;
         onSubmit?: SubmitHandler<T>;
         onInvalid?: SubmitErrorHandler<T>;
     }
 >;
 
-export const Form = <T extends FieldValues = FieldValues, C = any>(props: FormProps<T, C>) => {
+export const Form = <
+    T extends FieldValues = FieldValues,
+    C = any,
+    P = HTMLAttributes<HTMLFormElement>
+>(props: FormProps<T, C, P>) => {
     const {
         as: Component = "form",
         className,
+        mode,
+        disabled,
+        reValidateMode,
+        defaultValues,
+        values,
+        resetOptions,
+        resolver,
+        errors,
+        context,
+        shouldFocusError,
+        shouldUnregister,
+        shouldUseNativeValidation,
+        progressive,
+        criteriaMode,
+        delayError,
+        formControl,
         children,
         onSubmit,
         onInvalid,
         ...rest
     } = props;
 
-    const formProps = useForm<T, C>(rest),
-          submitRef = useRef(onSubmit),
+    const formProps = useForm<T, C>({
+        mode,
+        disabled,
+        reValidateMode,
+        defaultValues,
+        values,
+        resetOptions,
+        resolver,
+        errors,
+        context,
+        shouldFocusError,
+        shouldUnregister,
+        shouldUseNativeValidation,
+        progressive,
+        criteriaMode,
+        delayError,
+        formControl
+    });
+    const submitRef = useRef(onSubmit),
           invalidRef = useRef(onInvalid);
 
     submitRef.current = onSubmit;
@@ -54,6 +99,7 @@ export const Form = <T extends FieldValues = FieldValues, C = any>(props: FormPr
     return (
         <FormProvider<T> {...formProps}>
             <Component
+              {...rest as P}
               className={className}
               onSubmit={formProps.handleSubmit(handleSubmit, handleInvalid)}>
                 {children}

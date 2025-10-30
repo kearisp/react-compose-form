@@ -1,6 +1,6 @@
 {
     "name": "react-compose-form",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Composable form components built on top of React Hook Form",
     "author": "Kris Papercut <krispcut@gmail.com>",
     "license": "MIT",
@@ -26,14 +26,25 @@
         "start": "npm run watch",
         "watch": "tsc --watch",
         "build": "tsc --build",
-        "test": "echo 'error'"
+        "test": "vitest run --coverage",
+        "make-coverage-badge": "make-coverage-badge",
+        "test:watch": "vitest"
     },
     "peerDependencies": {
-        "react": "x.x.x",
+        "react": ">=16.8.0",
         "react-hook-form": "^7.x.x"
     },
     "devDependencies": {
+        "@testing-library/jest-dom": "^6.4.2",
+        "@testing-library/react": "^16.0.0",
+        "@testing-library/user-event": "^14.5.2",
         "@types/react": "^19.2.2",
-        "typescript": "^5.9.3"
+        "@types/react-dom": "^19.2.2",
+        "@vitest/coverage-v8": "^4.0.5",
+        "jsdom": "^25.0.1",
+        "make-coverage-badge": "^1.2.0",
+        "react": "^19.2.0",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.5"
     }
 }

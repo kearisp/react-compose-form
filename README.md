@@ -1,4 +1,12 @@
-# kp-admin
+# react-compose-form
+
+[![npm version](https://img.shields.io/npm/v/react-compose-form.svg)](https://www.npmjs.com/package/react-compose-form)
+[![Publish](https://github.com/kearisp/react-compose-form/actions/workflows/publish-latest.yml/badge.svg?event=release)](https://github.com/kearisp/react-compose-form/actions/workflows/publish-latest.yml)
+[![License](https://img.shields.io/npm/l/react-compose-form)](https://github.com/kearisp/react-compose-form/blob/master/LICENSE)
+
+[![npm total downloads](https://img.shields.io/npm/dt/react-compose-form.svg)](https://www.npmjs.com/package/react-compose-form)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/react-compose-form)](https://bundlephobia.com/package/react-compose-form)
+![Coverage](https://gist.githubusercontent.com/kearisp/f17f46c6332ea3bb043f27b0bddefa9f/raw/coverage-react-compose-form-latest.svg)
 
 ```shell
 npm i react-hook-form react-compose-form
