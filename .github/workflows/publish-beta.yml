@@ -36,7 +36,6 @@ jobs:
 
           - name: Update README badges for beta
             shell: bash
-            working-directory: ./packages/react-compose-form
             run: |
                 if [ "${{ github.event_name }}" == "pull_request" ]; then
                     BRANCH_NAME="${{ github.head_ref }}"
