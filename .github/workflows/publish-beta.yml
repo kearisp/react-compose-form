@@ -45,7 +45,7 @@ jobs:
                 echo "Branch is $BRANCH_NAME"
                 sed -i 's/coverage-react-compose-form-latest.svg/coverage-react-compose-form-beta.svg/g' README.md
                 sed -i 's/\[!\[Publish\]/\[!\[Beta\]/g' README.md
-                sed -E -i "s#publish-latest\.yml/badge\.svg\?event=release#publish-beta/badge.svg?branch=${BRANCH_NAME}&event=pull_request#g" README.md
+                sed -i "s#publish-latest\.yml/badge\.svg\?event=release#publish-beta/badge.svg?branch=${BRANCH_NAME}&event=pull_request#g" README.md
 
           - name: Cache dependencies
             uses: actions/cache@v4
