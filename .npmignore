@@ -17,6 +17,8 @@
 /package-lock.json
 /tsconfig.json
 /tsconfig.build.json
+/vitest.config.ts
+/vitest.setup.ts
 
 # Builds
 /lib/tsconfig.tsbuildinfo
