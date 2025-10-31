@@ -36,9 +36,17 @@ jobs:
 
           - name: Update README badges for beta
             shell: bash
+            working-directory: ./packages/react-compose-form
             run: |
+                if [ "${{ github.event_name }}" == "pull_request" ]; then
+                    BRANCH_NAME="${{ github.head_ref }}"
+                else
+                    BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+                fi
+                echo "Branch is $BRANCH_NAME"
                 sed -i 's/coverage-react-compose-form-latest.svg/coverage-react-compose-form-beta.svg/g' README.md
-                sed -i 's/publish-latest/publish-beta/g' README.md
+                sed -i 's/\[!\[Publish\]/\[!\[Beta\]/g' README.md
+                sed -E -i "s#publish-latest\.yml/badge\.svg\?event=release#publish-beta/badge.svg?branch=${BRANCH_NAME}&event=pull_request#g" README.md
 
           - name: Cache dependencies
             uses: actions/cache@v4
