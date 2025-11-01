@@ -30,10 +30,23 @@ jobs:
                 registry-url: 'https://registry.npmjs.org'
 
           - name: Setup beta version
-            id: setup_beta
             uses: kearisp/npm-version-action@v0.0.1
             with:
                 tag: beta
+
+          - name: Update README badges for beta
+            shell: bash
+            run: |
+                if [ "${{ github.event_name }}" == "pull_request" ]; then
+                    BRANCH_NAME="${{ github.head_ref }}"
+                else
+                    BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+                fi
+                echo "Branch is $BRANCH_NAME"
+                sed -i 's/\[\!\[Publish]/[![Beta]/g' README.md
+                sed -i "s#publish-latest.yml#publish-beta.yml#g" README.md
+                sed -i "s#badge.svg?event=release#badge.svg?branch=${BRANCH_NAME}\\&event=pull_request#g" README.md
+                sed -i 's/-latest.svg/-beta.svg/g' README.md
 
           - name: Cache dependencies
             uses: actions/cache@v4
@@ -46,6 +59,14 @@ jobs:
           - name: Install dependencies
             shell: bash
             run: npm install
+
+          - name: Test
+            uses: ./.github/actions/test
+            timeout-minutes: 2
+            with:
+                version: "beta"
+                gist_token: ${{ secrets.GIST_TOKEN }}
+                gist_id: ${{ secrets.GIST_ID }}
 
           - name: Publish beta to NPM
             if: ${{ github.repository_owner == 'kearisp' }}
