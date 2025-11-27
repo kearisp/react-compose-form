@@ -13,4 +13,4 @@ export const FormArrayItemContext = createContext<{
     moveDown() {}
 });
 
-export const useFormArrayItemContext = () => useContext(FormArrayItemContext);;
+export const useFormArrayItemContext = () => useContext(FormArrayItemContext);

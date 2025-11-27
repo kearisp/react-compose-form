@@ -2,7 +2,7 @@ import React from "react";
 import {render, screen} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {describe, it, expect, vi} from "vitest";
-import {Form, FormControl, FormComponentProps} from '../index';
+import {Form, FormControl, FormComponentProps} from "../index";
 
 
 describe("Form", (): void => {
@@ -17,9 +17,9 @@ describe("Form", (): void => {
             hidden: true
         }) as HTMLFormElement | null;
 
-        expect(screen.getByTestId('child')).toBeInTheDocument();
+        expect(screen.getByTestId("child")).toBeInTheDocument();
         expect(formEl).not.toBeNull();
-        expect(formEl!.className).toContain('my-form');
+        expect(formEl!.className).toContain("my-form");
     });
 
     it("calls onSubmit with form values", async () => {
@@ -27,20 +27,20 @@ describe("Form", (): void => {
         const handleSubmit = vi.fn();
 
         render(
-            <Form defaultValues={{first: ''}} onSubmit={handleSubmit}> <FormControl name="first"/>
+            <Form defaultValues={{first: ""}} onSubmit={handleSubmit}> <FormControl name="first"/>
                 <button type="submit">Submit</button>
             </Form>
         );
 
-        const input = screen.getByRole('textbox');
+        const input = screen.getByRole("textbox");
         await user.clear(input);
-        await user.type(input, 'Alice');
+        await user.type(input, "Alice");
 
-        await user.click(screen.getByRole('button', {name: /submit/i}));
+        await user.click(screen.getByRole("button", {name: /submit/i}));
 
         expect(handleSubmit).toHaveBeenCalledTimes(1);
         expect(handleSubmit).toHaveBeenLastCalledWith(
-            {first: 'Alice'},
+            {first: "Alice"},
             expect.anything()
         );
     });
@@ -50,13 +50,13 @@ describe("Form", (): void => {
         const handleInvalid = vi.fn();
 
         render(
-            <Form onInvalid={handleInvalid} defaultValues={{first: ''}}>
+            <Form onInvalid={handleInvalid} defaultValues={{first: ""}}>
                 <FormControl name="first" required="Required" />
                 <button type="submit">Submit</button>
             </Form>
         );
 
-        await user.click(screen.getByRole('button', {name: /submit/i}));
+        await user.click(screen.getByRole("button", {name: /submit/i}));
 
         expect(handleInvalid).toHaveBeenCalledTimes(1);
         const args = handleInvalid.mock.calls[0];
@@ -66,7 +66,7 @@ describe("Form", (): void => {
 
     it("uses defaultValues to prefill inputs", async () => {
         render(
-            <Form defaultValues={{first: 'Bob'}}>
+            <Form defaultValues={{first: "Bob"}}>
                 <FormControl
                   name="first" />
             </Form>

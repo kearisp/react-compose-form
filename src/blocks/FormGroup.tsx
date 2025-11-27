@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from "react";
-import {FormGroupContext, useFormGroupName} from "./FormGroupContext";
+import {FormGroupContext, useFormGroupName} from "../contexts";
 
 
 export type FormGroupProps = PropsWithChildren<{
