@@ -84,13 +84,13 @@ export const Form = <
 
     const handleSubmit: SubmitHandler<T> = useCallback((data: T, event) => {
         if(submitRef.current) {
-            submitRef.current(data, event);
+            return submitRef.current(data, event);
         }
     }, []);
 
     const handleInvalid: SubmitErrorHandler<T> = useCallback((errors, event) => {
         if(invalidRef.current) {
-            invalidRef.current(errors, event);
+            return invalidRef.current(errors, event);
         }
     }, []);
 
