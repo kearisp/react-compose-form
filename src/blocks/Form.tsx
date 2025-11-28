@@ -13,19 +13,19 @@ import {
     UseFormProps,
     FieldValues,
     SubmitHandler,
-    SubmitErrorHandler
+    SubmitErrorHandler,
+    DeepPartial
 } from "react-hook-form";
 
 export type FormComponentProps<P = unknown> = P & PropsWithChildren<{
-    className?: string;
     onSubmit?: (e: FormEvent) => void;
 }>;
 
 export type FormProps<T extends FieldValues = FieldValues, C = any, P = unknown> = PropsWithChildren<
-    UseFormProps<T, C> & Omit<P, "onSubmit" | "onInvalid"> & {
+    UseFormProps<DeepPartial<T>, C, T> & Omit<P, "onSubmit" | "onInvalid"> & {
         as?: ComponentType<FormComponentProps<P>> | keyof JSX.IntrinsicElements;
         onSubmit?: SubmitHandler<T>;
-        onInvalid?: SubmitErrorHandler<T>;
+        onInvalid?: SubmitErrorHandler<DeepPartial<T>>;
     }
 >;
 
@@ -58,7 +58,7 @@ export const Form = <
         ...rest
     } = props;
 
-    const formProps = useForm<T, C>({
+    const formProps = useForm<DeepPartial<T>, C, T>({
         mode,
         disabled,
         reValidateMode,
@@ -88,14 +88,14 @@ export const Form = <
         }
     }, []);
 
-    const handleInvalid: SubmitErrorHandler<T> = useCallback((errors, event) => {
+    const handleInvalid: SubmitErrorHandler<DeepPartial<T>> = useCallback((errors, event) => {
         if(invalidRef.current) {
             return invalidRef.current(errors, event);
         }
     }, []);
 
     return (
-        <FormProvider<T> {...formProps}>
+        <FormProvider {...formProps}>
             <Component
               {...rest as P}
               onSubmit={formProps.handleSubmit(handleSubmit, handleInvalid)}>
