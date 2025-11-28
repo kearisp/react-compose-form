@@ -1,9 +1,8 @@
 import React, {isValidElement, cloneElement, Children, PropsWithChildren, ComponentType, ElementType} from "react";
 import {useFieldArray} from "react-hook-form";
 import {FormGroup} from "./FormGroup";
-import {useFormGroupName} from "./FormGroupContext";
-import {FormArrayContext} from "./FormArrayContext";
-import {FormArrayItemContext} from "./FormArrayItemContext";
+import {FormArrayContext, FormArrayItemContext} from "../contexts";
+import {useFormGroupName} from "../hooks";
 
 
 export type FormArrayProps = PropsWithChildren<{
@@ -25,7 +24,7 @@ export const FormArray: React.FC<FormArrayProps> = (props) => {
     });
 
     return (
-        <FormGroup name={fullName}>
+        <FormGroup name={name}>
             <FormArrayContext.Provider value={array}>
                 <Component>
                     {array.fields.map((field, index) => {

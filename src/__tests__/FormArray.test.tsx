@@ -5,13 +5,11 @@ import userEvent from "@testing-library/user-event";
 import {
     Form,
     FormArray,
-    FormGroup,
     FormControl,
     useFormArray,
     useFormArrayItemContext,
     FormFieldProps
 } from "../index";
-import {useFieldArray} from "react-hook-form";
 
 
 describe("FormArray", () => {

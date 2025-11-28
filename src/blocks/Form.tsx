@@ -17,14 +17,12 @@ import {
 } from "react-hook-form";
 
 export type FormComponentProps<P = unknown> = P & PropsWithChildren<{
-    className?: string;
     onSubmit?: (e: FormEvent) => void;
 }>;
 
 export type FormProps<T extends FieldValues = FieldValues, C = any, P = unknown> = PropsWithChildren<
-    UseFormProps<T, C> & P & {
+    UseFormProps<T, C> & Omit<P, "onSubmit" | "onInvalid"> & {
         as?: ComponentType<FormComponentProps<P>> | keyof JSX.IntrinsicElements;
-        className?: string;
         onSubmit?: SubmitHandler<T>;
         onInvalid?: SubmitErrorHandler<T>;
     }
@@ -32,12 +30,11 @@ export type FormProps<T extends FieldValues = FieldValues, C = any, P = unknown>
 
 export const Form = <
     T extends FieldValues = FieldValues,
-    C = any,
-    P = HTMLAttributes<HTMLFormElement>
+    C = HTMLFormElement,
+    P = HTMLAttributes<C>
 >(props: FormProps<T, C, P>) => {
     const {
         as: Component = "form",
-        className,
         mode,
         disabled,
         reValidateMode,
@@ -60,7 +57,7 @@ export const Form = <
         ...rest
     } = props;
 
-    const formProps = useForm<T, C>({
+    const formProps = useForm<T>({
         mode,
         disabled,
         reValidateMode,
@@ -86,13 +83,13 @@ export const Form = <
 
     const handleSubmit: SubmitHandler<T> = useCallback((data: T, event) => {
         if(submitRef.current) {
-            submitRef.current(data, event);
+            return submitRef.current(data, event);
         }
     }, []);
 
     const handleInvalid: SubmitErrorHandler<T> = useCallback((errors, event) => {
         if(invalidRef.current) {
-            invalidRef.current(errors, event);
+            return invalidRef.current(errors, event);
         }
     }, []);
 
@@ -100,7 +97,6 @@ export const Form = <
         <FormProvider<T> {...formProps}>
             <Component
               {...rest as P}
-              className={className}
               onSubmit={formProps.handleSubmit(handleSubmit, handleInvalid)}>
                 {children}
             </Component>

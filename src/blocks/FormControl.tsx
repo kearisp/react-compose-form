@@ -7,8 +7,8 @@ import {
     ValidationRule,
     ControllerFieldState
 } from "react-hook-form";
-import {useFormGroupName} from "./FormGroupContext";
-import {FormControlContext} from "./FormControlContext";
+import {FormControlContext} from "../contexts";
+import {useFormGroupName} from "../hooks";
 
 
 export type FormFieldProps<P = unknown> = P & Partial<ControllerRenderProps & ControllerFieldState>;
