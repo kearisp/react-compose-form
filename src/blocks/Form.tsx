@@ -95,7 +95,7 @@ export const Form = <
     }, []);
 
     return (
-        <FormProvider {...formProps}>
+        <FormProvider<DeepPartial<T>, C, T> {...formProps}>
             <Component
               {...rest as P}
               onSubmit={formProps.handleSubmit(handleSubmit, handleInvalid)}>
