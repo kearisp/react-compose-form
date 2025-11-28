@@ -22,7 +22,7 @@ export type FormComponentProps<P = unknown> = P & PropsWithChildren<{
 }>;
 
 export type FormProps<T extends FieldValues = FieldValues, C = any, P = unknown> = PropsWithChildren<
-    UseFormProps<T, C> & Omit<P, "onSubmit"> & {
+    UseFormProps<T, C> & Omit<P, "onSubmit" | "onInvalid"> & {
         as?: ComponentType<FormComponentProps<P>> | keyof JSX.IntrinsicElements;
         onSubmit?: SubmitHandler<T>;
         onInvalid?: SubmitErrorHandler<T>;

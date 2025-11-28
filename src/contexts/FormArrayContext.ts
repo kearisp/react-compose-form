@@ -1,4 +1,4 @@
-import {createContext, useContext} from "react";
+import {createContext} from "react";
 import {UseFieldArrayReturn} from "react-hook-form";
 
 
@@ -13,5 +13,3 @@ export const FormArrayContext = createContext<UseFieldArrayReturn>({
     update() {},
     replace() {}
 });
-
-export const useFormArray = () => useContext(FormArrayContext);

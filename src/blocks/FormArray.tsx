@@ -1,7 +1,8 @@
 import React, {isValidElement, cloneElement, Children, PropsWithChildren, ComponentType, ElementType} from "react";
 import {useFieldArray} from "react-hook-form";
 import {FormGroup} from "./FormGroup";
-import {useFormGroupName, FormArrayContext, FormArrayItemContext} from "../contexts";
+import {FormArrayContext, FormArrayItemContext} from "../contexts";
+import {useFormGroupName} from "../hooks";
 
 
 export type FormArrayProps = PropsWithChildren<{
