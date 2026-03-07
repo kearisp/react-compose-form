@@ -1,39 +1,37 @@
 import React, {
     useRef,
     useCallback,
-    FormEvent,
-    ComponentType,
-    PropsWithChildren,
-    JSX,
-    HTMLAttributes
+    useEffect,
+    useLayoutEffect,
+    ElementType
 } from "react";
 import {
     useForm,
     FormProvider,
     UseFormProps,
+    UseFormReturn,
     FieldValues,
     SubmitHandler,
     SubmitErrorHandler
 } from "react-hook-form";
+import {useFormContext} from "../contexts/FormContext";
+import {PolymorphicComponentProps} from "../types/PolymorphicComponentProps";
 
-export type FormComponentProps<P = unknown> = P & PropsWithChildren<{
-    onSubmit?: (e: FormEvent) => void;
+
+type FormProps<
+    T extends FieldValues = FieldValues,
+    C extends ElementType = "form"
+> = PolymorphicComponentProps<C, UseFormProps<T, C> & {
+    onSubmit?: SubmitHandler<T>;
+    onInvalid?: SubmitErrorHandler<T>;
 }>;
-
-export type FormProps<T extends FieldValues = FieldValues, C = any, P = unknown> = PropsWithChildren<
-    UseFormProps<T, C> & Omit<P, "onSubmit" | "onInvalid"> & {
-        as?: ComponentType<FormComponentProps<P>> | keyof JSX.IntrinsicElements;
-        onSubmit?: SubmitHandler<T>;
-        onInvalid?: SubmitErrorHandler<T>;
-    }
->;
 
 export const Form = <
     T extends FieldValues = FieldValues,
-    C = HTMLFormElement,
-    P = HTMLAttributes<C>
->(props: FormProps<T, C, P>) => {
+    C extends ElementType = "form"
+>(props: FormProps<T, C>) => {
     const {
+        id,
         as: Component = "form",
         mode,
         disabled,
@@ -57,7 +55,13 @@ export const Form = <
         ...rest
     } = props;
 
-    const formProps = useForm<T>({
+    const {
+        registry,
+        registerForm,
+        unregisterForm
+    } = useFormContext();
+
+    const form = useForm<T>({
         mode,
         disabled,
         reValidateMode,
@@ -75,6 +79,11 @@ export const Form = <
         delayError,
         formControl
     });
+
+    if(id && !registry.has(id)) {
+        registry.set(id, form as UseFormReturn);
+    }
+
     const submitRef = useRef(onSubmit),
           invalidRef = useRef(onInvalid);
 
@@ -93,11 +102,30 @@ export const Form = <
         }
     }, []);
 
+    useEffect(() => {
+        if(!id) {
+            return;
+        }
+
+        registerForm(id, form as UseFormReturn);
+    }, [registerForm, id, form, form.formState.isSubmitting]);
+
+    useLayoutEffect(() => {
+        if(!id) {
+            return;
+        }
+
+        return () => {
+            unregisterForm(id);
+        };
+    }, []);
+
     return (
-        <FormProvider<T> {...formProps}>
+        <FormProvider<T> {...form}>
             <Component
-              {...rest as P}
-              onSubmit={formProps.handleSubmit(handleSubmit, handleInvalid)}>
+              {...rest}
+              id={id}
+              onSubmit={form.handleSubmit(handleSubmit, handleInvalid)}>
                 {children}
             </Component>
         </FormProvider>
